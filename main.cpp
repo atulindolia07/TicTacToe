@@ -46,6 +46,7 @@ class Board{
     Board(int size) : size(size),board(size,std::vector<PlayingPiece>(size)){}
 
     bool addPiece(int row,int col, PlayingPiece piece){
+        if(row>=size || col>=size) return false;
         if(symbolMapping[board[row][col].pieceType]!="") return false;
 
         board[row][col] = piece;
@@ -67,6 +68,7 @@ class Board{
 
     void printBoard(){
         for(int i=0;i<size;i++){
+            std::cout<<" | ";
             for(int j=0;j<size;j++){
                 if(symbolMapping[board[i][j].pieceType]!="") std::cout<<" "<<symbolMapping[board[i][j].pieceType]<<" ";
                 else std::cout<<"   ";
@@ -155,9 +157,8 @@ class TicTacToe{
                     getline(ss, substr, ',');
                     values.push_back(substr);
                 }
-                int inputRow = std::stoi(values[0]);
-                int inputColumn = std::stoi(values[1]);
-
+                int inputRow = std::stoi(values[0])-1;
+                int inputColumn = std::stoi(values[1])-1;
 
                 //place the piece 
                 bool isPiecePlacedSuccessfully = gameBoard->addPiece(inputRow,inputColumn,playerTurn.playingPiece);
@@ -188,7 +189,6 @@ class TicTacToe{
 
             //need to check in row
             for(int i=0;i<gameBoard->size;i++) {
-
                 if(symbolMapping[gameBoard->board[row][i].pieceType] == "" || gameBoard->board[row][i].pieceType != pieceType) {
                     rowMatch = false;
                 }
@@ -196,7 +196,6 @@ class TicTacToe{
 
             //need to check in column
             for(int i=0;i<gameBoard->size;i++) {
-
                 if(symbolMapping[gameBoard->board[i][col].pieceType] == "" || gameBoard->board[i][col].pieceType != pieceType) {
                     columnMatch = false;
                 }
@@ -224,6 +223,11 @@ int main(){
     TicTacToe game;
     game.initializeGame();
     std::string winner = game.startGame();
-    std::cout<<"Game winner is "<<winner<<std::endl;
+    if(winner=="tie"){
+        std::cout<<"Game is "<<winner<<std::endl;
+    }
+    else{
+        std::cout<<"Game winner is "<<winner<<std::endl;
+    }
     return 0;
 }
