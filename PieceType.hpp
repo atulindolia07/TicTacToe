@@ -1,6 +1,6 @@
 #include<iostream>
 
 enum PieceType {
-    X,
+    X=1,
     O
 };

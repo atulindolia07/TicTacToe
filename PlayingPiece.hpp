@@ -4,7 +4,6 @@
 class PlayingPiece {
     public:
     PieceType pieceType;
-
     PlayingPiece(){
 
     }
